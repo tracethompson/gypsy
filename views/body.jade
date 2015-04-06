@@ -2,13 +2,10 @@
 //- This file provides the HTML body part.
 
 
-body
+body 
   table
     tr
       td
         h1 Gypsy
-        input(type="text", 
-              placeholder="Twitter handle", 
-              ng-model="handle.name"
-              )
-        button.btn(ng-click="addTweet()" title="Submit") Submit
+
+        div(ng-view)

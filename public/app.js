@@ -1,11 +1,12 @@
 angular.module('gypsy', [
   'gypsy.services',
+  'gypsy.twitter',
   'ngRoute'
 ])
 .config(function($routeProvider, $httpProvider) {
   $routeProvider
     .when('/home', {
-      templateUrl: '../views/body.jade',
+      templateUrl: 'views/submit.html',
       controller: 'GypsyController'
     })
     .when('/', {
