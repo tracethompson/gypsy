@@ -6,7 +6,10 @@
 // and jade as template engine (http://jade-lang.com/).
 
 var express = require('express'), // used for logging incoming request
-bodyParser  = require('body-parser')
+bodyParser  = require('body-parser'),
+watson = require('watson-developer-cloud-alpha'),
+bluemix = require('./config/bluemix'),
+extend = require('util')._extend
 
 // setup middleware
 var app = express();
@@ -33,7 +36,7 @@ var appInfo = JSON.parse(process.env.VCAP_APPLICATION || "{}");
 // VCAP_SERVICES contains all the credentials of services bound to
 // this application. For details of its content, please refer to
 // the document or sample of each service.
-var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
+// var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
 // TODO: Get service credentials and communicate with bluemix services.
 
 // The IP address of the Cloud Foundry DEA (Droplet Execution Agent) that hosts this application:
@@ -44,11 +47,29 @@ var port = (process.env.VCAP_APP_PORT || 3000);
 app.listen(port, host);
 console.log('App started on port ' + port);
 
+var credentials = extend({
+    version: 'v2',
+    url: "https://gateway.watsonplatform.net/personality-insights/api",
+    username: 'e9ac95ba-7cc2-4afb-9ce1-352a4ef0d872',
+    password: "e9fTbIKcNWCd"
+}, bluemix.getServiceCreds('personality_insights')); // VCAP_SERVICES
+var personalityInsights = new watson.personality_insights(credentials);
 
-
-var watsonUrl = "https://gateway.watsonplatform.net/personality-insights/api/v2/profile"
 
 app.post('/watsonPost', function(req, res){
-  
-})
+  console.log("body being sent to watson: ",req.body.info);
+
+   personalityInsights.profile(req.body.info, function(err, profile) {
+    if (err) {
+      if (err.message){
+        console.log(err.message);
+        err = { error: err.message };
+      }
+      return res.status(err.code || 500).json(err || 'Error processing the request');
+    }
+    else
+      console.log(res.json(profile))
+      return res.json(profile);
+  });
+});
 

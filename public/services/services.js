@@ -15,12 +15,15 @@ angular.module('gypsy.services', [])
 
   var addTweets = function(data){
     console.log("entered addTweets");
-    var info = {info : "hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare."}
+    var info = {text : "hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. "}
     
     return $http({
       method: 'POST',
+      data: {
+        text: info
+      },
       url: "/watsonPost",
-      data: JSON.stringify(info)
+      dataType: 'json',
     })
     .success(function(resp) {
       console.log(resp);
