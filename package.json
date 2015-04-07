@@ -9,6 +9,7 @@
     "body-parser": "^1.12.2",
     "express": "3.4.7",
     "jade": "1.1.4",
+    "twitter": "^1.2.5",
     "watson-developer-cloud-alpha": "^0.10.8"
   },
   "engines": {

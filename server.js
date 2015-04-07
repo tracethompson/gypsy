@@ -9,7 +9,8 @@ var express = require('express'), // used for logging incoming request
 bodyParser  = require('body-parser'),
 watson = require('watson-developer-cloud-alpha'),
 bluemix = require('./config/bluemix'),
-extend = require('util')._extend
+extend = require('util')._extend,
+Twitter = require('twitter')
 
 // setup middleware
 var app = express();
@@ -33,11 +34,6 @@ app.get('/', function(req, res){
 var appInfo = JSON.parse(process.env.VCAP_APPLICATION || "{}");
 // TODO: Get application information and use it in your app.
 
-// VCAP_SERVICES contains all the credentials of services bound to
-// this application. For details of its content, please refer to
-// the document or sample of each service.
-// var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
-// TODO: Get service credentials and communicate with bluemix services.
 
 // The IP address of the Cloud Foundry DEA (Droplet Execution Agent) that hosts this application:
 var host = (process.env.VCAP_APP_HOST || 'localhost');
@@ -56,8 +52,7 @@ var credentials = extend({
 var personalityInsights = new watson.personality_insights(credentials);
 
 
-app.post('/watsonPost', function(req, res){
-  console.log("body being sent to watson: ",req.body);
+app.post('/api/watson', function(req, res){
 
    personalityInsights.profile(req.body, function(err, profile) {
     if (err) {
@@ -72,3 +67,25 @@ app.post('/watsonPost', function(req, res){
   });
 });
 
+var twitterClient = new Twitter({
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+});
+
+
+app.get('/api/tweets', function(req, res){
+  var twitterHandle = req.query.handle;
+  console.log("handle: ", twitterHandle);
+ 
+  var params = {screen_name: twitterHandle};
+  twitterClient.get('statuses/user_timeline', params, function(error, tweets, response){
+    if (!error) {
+      //console.log(tweets);
+    }
+  });
+
+
+
+})

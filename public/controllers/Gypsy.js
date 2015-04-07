@@ -32,12 +32,10 @@ angular.module('gypsy.twitter', [])
 
 
   $scope.getTweets = function () {
-    console.log("entered add Tweets in controller");
-    $scope.loading = true;
-    Tweets.addLink($scope.handle.name)
+    console.log("twitter handle: ", $scope.handle.name);
+    Tweets.getTweets($scope.handle.name)
       .then(function () {
-        $scope.loading = false;
-        $location.path('/');
+        console.log("data recieved: ",data)
       })
       .catch(function (error) {
         console.log(error);

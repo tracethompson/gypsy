@@ -1,8 +1,19 @@
 <div class="creator" ng-controller='GypsyController'>
-  <form name='gypsyForm' ng-submit="addTweets()">
+  <form name='tweetForm' ng-submit="getTweets()">
     <input name='handle' type="text"
       ng-model="handle.name"
-      placeholder="Eneter twitter handle!" 
+      placeholder="Enter twitter handle!" 
+      />
+
+    <button type="submit" value="Gypsy" >
+      Send twit handle
+    </button>
+
+  </form>
+
+  <form name='gypsyForm' ng-submit="addTweets()">
+    <input name='watson' type="text"
+      placeholder="Enter Text!" 
       />
 
     <button type="submit" value="Gypsy" >
@@ -12,7 +23,8 @@
     <div class="profile"
     ng-repeat="attr in profile">
 
-        <div class="attribute1"> {{attr.id}}
+        <div class="attribute1"> 
+         {{attr.id}}
          <span>{{attr.value}}</span>
          </div>
 

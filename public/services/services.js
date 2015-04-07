@@ -2,16 +2,24 @@ angular.module('gypsy.services', [])
 
 .factory('Tweets', function ($http) {
   // Your code here
-  var getTweets = function(){
-    console.log("entered services getTweets");
+  var getTweets = function(handle){
+    console.log("factory handle: ", handle)
+    var params = {handle: handle}
     return $http({
       method: 'GET',
-      url: '/api/links'
+      url: '/api/tweets',
+      params: params
     })
     .then(function(resp) { 
       return resp.data//?????
     })
   }
+
+
+
+
+
+
 
   var addTweets = function(data){
     console.log("entered addTweets");
@@ -34,7 +42,7 @@ angular.module('gypsy.services', [])
       data: {
         text: text
       },
-      url: "/watsonPost",
+      url: "/api/watson",
       dataType: 'json',
     })
     .success(function(resp) {
