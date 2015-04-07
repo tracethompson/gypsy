@@ -4,6 +4,7 @@ angular.module('gypsy.twitter', [])
   // Your code here
   $scope.handle = {};
 
+
   /**
    * Returns a 'flattened' version of the traits tree, to display it as a list
    * @return array of {id:string, title:boolean, value:string} objects
@@ -32,18 +33,18 @@ angular.module('gypsy.twitter', [])
 
 
   $scope.getTweets = function () {
-    console.log("twitter handle: ", $scope.handle.name);
     Tweets.getTweets($scope.handle.name)
-      .then(function () {
-        console.log("data recieved: ",data)
+      .then(function (tweets) {
+        var formattedTweets = Tweets.tweetsFormat(tweets.data)
+        $scope.addTweets(formattedTweets);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
 
-  $scope.addTweets = function(){
-    Tweets.addTweets()
+  $scope.addTweets = function(formattedTweets){
+    Tweets.addTweets(formattedTweets)
       .then(function (profile) {
         console.log("profile: ",flatten(profile.data.tree))
         $scope.profile = flatten(profile.data.tree);

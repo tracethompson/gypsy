@@ -1,51 +1,52 @@
 angular.module('gypsy.services', [])
 
 .factory('Tweets', function ($http) {
-  // Your code here
+
+  var twitter = {}
+
+  
   var getTweets = function(handle){
-    console.log("factory handle: ", handle)
     var params = {handle: handle}
     return $http({
       method: 'GET',
       url: '/api/tweets',
       params: params
     })
-    .then(function(resp) { 
-      return resp.data//?????
+  };
+
+
+  var tweetsFormat = function(tweets){
+    var formattedTweets = [];
+
+    _.each(tweets, function(tweet, index){
+
+      formattedTweets[index] = {
+        id: tweet.id_str,
+        userid: tweet.user.id_str,
+        sourceid: "twitter",
+        contenttype: "text/html",
+        language: 'en',
+        content: tweet.text
+      }
     })
+    return formattedTweets;
   }
 
 
-
-
-
-
-
-  var addTweets = function(data){
-    console.log("entered addTweets");
-    // var info = {"contentItems":[
-    // {
-    //   "content": "hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. ",
-    //   "contenttype": "text/plain",
-    //   "created": 123534765356,
-    //   "id": "2122341324",
-    //   "language": "en",
-    //   "sourceid": "test",
-    //   "userid": "trace"
-    // }
-    // ]}
-    var text = "hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare. hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare."
-
+  var addTweets = function(tweets){
+    console.log("tweets passed to watson: ", tweets);
     
     return $http({
       method: 'POST',
       data: {
-        text: text
+        contentItems: tweets
       },
       url: "/api/watson",
       dataType: 'json',
     })
     .success(function(resp) {
+      console.log("response: ",resp)
+      return resp
     })
     .catch(function(err) {
       console.log(err);
@@ -54,7 +55,8 @@ angular.module('gypsy.services', [])
 
   return {
     getTweets: getTweets,
-    addTweets: addTweets
+    addTweets: addTweets,
+    tweetsFormat: tweetsFormat
   };
 
 })

@@ -1,16 +1,11 @@
-/*jshint node:true*/
-
-// app.js
-// This file contains the server side JavaScript code for your application.
-// This sample application uses express as web application framework (http://expressjs.com/),
-// and jade as template engine (http://jade-lang.com/).
-
 var express = require('express'), // used for logging incoming request
 bodyParser  = require('body-parser'),
 watson = require('watson-developer-cloud-alpha'),
 bluemix = require('./config/bluemix'),
 extend = require('util')._extend,
-Twitter = require('twitter')
+Twitter = require('twitter'),
+Q       = require('q')
+
 
 // setup middleware
 var app = express();
@@ -43,6 +38,14 @@ var port = (process.env.VCAP_APP_PORT || 3000);
 app.listen(port, host);
 console.log('App started on port ' + port);
 
+
+/* ---- 
+      
+
+    SEND SHIT TO WATSON HERE
+
+*/
+
 var credentials = extend({
     version: 'v2',
     url: "https://gateway.watsonplatform.net/personality-insights/api",
@@ -67,6 +70,15 @@ app.post('/api/watson', function(req, res){
   });
 });
 
+
+
+/*------           
+
+
+GET TWEETS HERE 
+
+
+*/
 var twitterClient = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -79,13 +91,18 @@ app.get('/api/tweets', function(req, res){
   var twitterHandle = req.query.handle;
   console.log("handle: ", twitterHandle);
  
-  var params = {screen_name: twitterHandle};
+  var params = {screen_name: twitterHandle, count: 100, trim_user: 1};
   twitterClient.get('statuses/user_timeline', params, function(error, tweets, response){
     if (!error) {
-      //console.log(tweets);
+      console.log("tweets recieved");
+      return res.json(tweets);
+    } else {
+      throw error;
     }
   });
 
+
+/* DONE GETTING TWEETS */
 
 
 })
