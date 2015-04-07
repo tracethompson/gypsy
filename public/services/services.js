@@ -38,7 +38,6 @@ angular.module('gypsy.services', [])
       dataType: 'json',
     })
     .success(function(resp) {
-      console.log(resp);
     })
     .catch(function(err) {
       console.log(err);
