@@ -57,9 +57,9 @@ var personalityInsights = new watson.personality_insights(credentials);
 
 
 app.post('/watsonPost', function(req, res){
-  console.log("body being sent to watson: ",req.body.info);
+  console.log("body being sent to watson: ",req.body);
 
-   personalityInsights.profile(req.body.info, function(err, profile) {
+   personalityInsights.profile(req.body, function(err, profile) {
     if (err) {
       if (err.message){
         console.log(err.message);
@@ -68,7 +68,6 @@ app.post('/watsonPost', function(req, res){
       return res.status(err.code || 500).json(err || 'Error processing the request');
     }
     else
-      console.log(res.json(profile))
       return res.json(profile);
   });
 });

@@ -18,6 +18,9 @@ angular.module('gypsy.twitter', [])
   };
 
   $scope.addTweets = function(){
-    Tweets.addTweets();
+    Tweets.addTweets()
+      .then(function (profile) {
+        console.log("profile: ",profile)
+      })
   }
 });
