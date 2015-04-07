@@ -13,16 +13,17 @@ angular.module('gypsy.services', [])
     })
   }
 
-  var addLink = function(url){
+  var addTweets = function(data){
+    console.log("entered addTweets");
+    var info = {info : "hello my name is trace I am 21 I am not sad I am happy kind of I live in SF I skateboard I study at makersquare."}
+    
     return $http({
       method: 'POST',
-      url: '/api/links',
-      data: url
+      url: "/watsonPost",
+      data: JSON.stringify(info)
     })
     .success(function(resp) {
       console.log(resp);
-      console.log("response url: ",resp.url)
-      console.log("base url: ",resp.base_url);
     })
     .catch(function(err) {
       console.log(err);
@@ -30,7 +31,12 @@ angular.module('gypsy.services', [])
   };
 
   return {
-    getTweets: getTweets
+    getTweets: getTweets,
+    addTweets: addTweets
   };
 
 })
+
+
+
+

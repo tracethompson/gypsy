@@ -6,7 +6,7 @@ angular.module('gypsy', [
 .config(function($routeProvider, $httpProvider) {
   $routeProvider
     .when('/home', {
-      templateUrl: 'views/submit.html',
+      templateUrl: 'views/gypsy.html',
       controller: 'GypsyController'
     })
     .when('/', {

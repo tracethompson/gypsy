@@ -5,20 +5,25 @@
 // This sample application uses express as web application framework (http://expressjs.com/),
 // and jade as template engine (http://jade-lang.com/).
 
-var express = require('express');
+var express = require('express'), // used for logging incoming request
+bodyParser  = require('body-parser')
 
 // setup middleware
 var app = express();
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(app.router);
 app.use(express.errorHandler());
 app.use(express.static(__dirname + '/public')); //setup static public directory
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views'); //optional since express defaults to CWD/views
 
+
 // render index page
 app.get('/', function(req, res){
 	res.render('index');
 });
+
 
 // There are many useful environment variables available in process.env.
 // VCAP_APPLICATION contains useful information about a deployed application.
@@ -38,4 +43,12 @@ var port = (process.env.VCAP_APP_PORT || 3000);
 // Start server
 app.listen(port, host);
 console.log('App started on port ' + port);
+
+
+
+var watsonUrl = "https://gateway.watsonplatform.net/personality-insights/api/v2/profile"
+
+app.post('/watsonPost', function(req, res){
+  
+})
 

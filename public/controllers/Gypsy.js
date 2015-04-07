@@ -16,4 +16,8 @@ angular.module('gypsy.twitter', [])
         console.log(error);
       });
   };
+
+  $scope.addTweets = function(){
+    Tweets.addTweets();
+  }
 });
