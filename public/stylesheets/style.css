@@ -80,3 +80,37 @@ pre {
 	margin: 0;
 }
 
+.needs{
+	display: inline;
+	float: right;
+	width: 30%;
+}
+
+.values{
+	display: inline;
+	float: right;
+	width: 30%;
+}
+
+.big5{
+	float: left;
+	display: inline;
+	width: 30%;
+}
+
+.container{
+	margin-left: 10%;
+}
+
+.title{
+	margin-left: 40%;
+}
+
+form{
+	margin-left: 38%;
+	padding-bottom: 50px;
+}
+
+.name{
+	font-weight: bold;
+}

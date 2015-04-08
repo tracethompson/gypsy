@@ -43,11 +43,34 @@ angular.module('gypsy.twitter', [])
       });
   };
 
+
+
   $scope.addTweets = function(formattedTweets){
     Tweets.addTweets(formattedTweets)
       .then(function (profile) {
-        console.log("profile: ",flatten(profile.data.tree))
         $scope.profile = flatten(profile.data.tree);
+        profileFormatter($scope.profile)
       })
   }
+
+  var profileFormatter = function(profile) {
+    $scope.bigfive = [];
+    $scope.needs = [];
+    $scope.values = [];
+    console.log("profile: ", profile);
+    for(var i = 1; i < 36; i ++){
+      $scope.bigfive.push(profile[i])
+    }
+    for(var i = 37; i < 49; i++){
+      $scope.needs.push(profile[i])
+    }
+    for(var i = 50; i < profile.length; i++){
+      $scope.values.push(profile[i])
+    } 
+
+    console.log("bigfive: ", $scope.bigfive)
+    console.log("needs: ", $scope.needs)
+    console.log("values: ", $scope.values)
+  }
+
 });

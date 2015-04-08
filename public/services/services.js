@@ -34,8 +34,7 @@ angular.module('gypsy.services', [])
 
 
   var addTweets = function(tweets){
-    console.log("tweets passed to watson: ", tweets);
-    
+  
     return $http({
       method: 'POST',
       data: {
@@ -45,7 +44,6 @@ angular.module('gypsy.services', [])
       dataType: 'json',
     })
     .success(function(resp) {
-      console.log("response: ",resp)
       return resp
     })
     .catch(function(err) {

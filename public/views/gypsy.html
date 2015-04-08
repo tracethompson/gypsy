@@ -1,4 +1,5 @@
-<div class="creator" ng-controller='GypsyController'>
+<div class="container">
+  <h1 class="title">Gypsy</h1>
   <form name='tweetForm' ng-submit="getTweets()">
     <input name='handle' type="text"
       ng-model="handle.name"
@@ -6,20 +7,23 @@
       />
 
     <button type="submit" value="Gypsy" >
-      Send twit handle
+      Send
     </button>
-
   </form>
 
-
-    <div class="profile"
-    ng-repeat="attr in profile">
-
-        <div class="attribute1"> 
-         {{attr.id}}
-         <span>{{attr.value}}</span>
-         </div>
-
+    <div class="big5">
+        <h2>Big Five</h2>
+            <tr>
+        <span ng-repeat="attr in bigfive" class="name">{{attr.id}}  - <span class="percent">{{attr.value}}</span><br><br></span>
     </div>
-    
+
+    <div class="needs">
+        <h2>Needs</h2>
+        <span ng-repeat="attr in needs" class="name"> {{attr.id}}   - <span class="percent">{{attr.value}}</span> <br><br></span>
+    </div>
+
+    <div class="values">
+        <h2>Values</h2>
+        <span ng-repeat="attr in values" class="name">{{attr.id}}   - <span class="percent">{{attr.value}}</span><br><br></span>
+    </div>
 </div>
